@@ -1,0 +1,12 @@
+(load "p112-decode.scm")
+(load "p112-make-code-tree.scm")
+(load "p112-make-leaf.scm")
+(load "p112-encode.scm")
+(define (test)
+  (define sample-tree
+    (make-code-tree (make-leaf 'A 4) 
+		    (make-code-tree (make-leaf 'B 2)
+				    (make-code-tree (make-leaf 'D 1)
+						    (make-leaf 'c 1)))))
+  (define sample-message '(0 1 1 0 0 1 0 1 0 1 1 1 0))
+  (encode (decode sample-message sample-tree) sample-tree))

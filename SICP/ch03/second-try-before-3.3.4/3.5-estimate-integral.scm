@@ -1,0 +1,20 @@
+(define (estimate-integral trials)
+  (* 4.0 (mont-carlo trials in-the-circle)))
+
+(define (in-the-circle)
+  (let ((x (random-in-range 2.0 8.0))
+	(y (random-in-range 4.0 10.0)))
+    (let ((h (+ (square (- x 5)) 
+		(square (- y 7)))))
+      (>= 9 h))))
+
+(define (random-in-range low high)
+  (let ((range (- high low)))
+    (+ low (random range))))
+
+(define (mont-carlo trials experiment)
+  (define (iter trials-remaining trials-passed)
+    (cond ((= trials-remaining 0) (/ trials-passed trials))
+	  ((experiment) (iter (- trials-remaining 1) (+ trials-passed 1)))
+	  (else (iter (- trials-remaining 1) trials-passed))))
+  (iter trials 0))

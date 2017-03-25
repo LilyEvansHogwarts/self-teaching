@@ -1,0 +1,6 @@
+(load "p119-make-from-real-imag.scm")
+(load "p119-real-part.scm")
+(load "p119-imag-part.scm")
+(define (add-complex x y)
+  (make-from-real-imag (+ (real-part_ x) (real-part_ y))
+		       (+ (imag-part_ x) (imag-part_ y))))

@@ -1,0 +1,10 @@
+(define (make-from-mag-ang r a)
+  (define (dispatch op)
+    (cond ((eq? op 'real-part_) (* r (cos a)))
+	  ((eq? op 'imag-part_) (* r (sin a)))
+	  ((eq? op 'magnitude_) r)
+	  ((eq? op 'angle_) a)
+	  (else (error "Unknown op -- MAKE-FROM-REAL-IMAG" op))))
+  dispatch)
+
+(define (apply-generic op arg) (arg op))

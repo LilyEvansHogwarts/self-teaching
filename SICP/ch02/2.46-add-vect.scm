@@ -1,0 +1,5 @@
+(load "2.46-make-vect.scm")
+(load "2.46-xcor-vect.scm")
+(load "2.46-ycor-vect.scm")
+(define (add-vect x y)
+  (make-vect (+ (xcor-vect x) (xcor-vect y)) (+ (ycor-vect x) (ycor-vect y))))

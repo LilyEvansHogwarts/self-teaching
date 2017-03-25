@@ -1,0 +1,5 @@
+(define (multiplier p)
+  (display "multiplier ")
+  (display (car p))
+  (newline)
+  (car p))

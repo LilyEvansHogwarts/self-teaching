@@ -1,0 +1,10 @@
+(load "p106-entry.scm")
+(load "p106-left-branch.scm")
+(load "p106-right-branch.scm")
+(define (lookup given-key set-of-records)
+  (if (null? set-of-records)
+    #f
+    (let ((entry-key (key (entry set-of-records))))
+      (cond ((= entry-key given-key) (entry set-of-records))
+	    ((< entry-key given-key) (lookup given-key (right-branch set-of-records)))
+	    ((> entry-key given-key) (lookup given-key (left-branch set-of-records)))))))

@@ -1,0 +1,5 @@
+(load "p119-real-part-rectangular.scm")
+(load "p119-imag-part-rectangular.scm")
+(define (magnitude-rectangular z)
+  (sqrt (+ (square (real-part-rectangular z))
+	   (square (imag-part-rectangular z)))))

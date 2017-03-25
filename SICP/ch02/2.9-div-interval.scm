@@ -1,0 +1,7 @@
+(load "2.7-make-interval.scm")
+(load "2.7-lower-bound.scm")
+(load "2.7-upper-bound.scm")
+(define (div-interval x y)
+   (cond ((and (< (lower-bound y) 0) (> (upper-bound y) 0)) (display "error"))
+         ((and (< (lower-bound x) 0) (> (upper-bound x) 0)) (display "error"))
+         (else (mul-interval x (make-interval (/ 1.0 (upper-bound y)) (/ 1.0 (lower-bound y)))))))

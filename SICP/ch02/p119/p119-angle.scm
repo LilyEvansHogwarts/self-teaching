@@ -1,0 +1,8 @@
+(load "p119-rectangular.scm")
+(load "p119-polar.scm")
+(load "p119-angle-rectangular.scm")
+(load "p119-angle-polar.scm")
+(define (angle_ z)
+  (cond ((rectangular? z) (angle-rectangular z))
+	((polar? z) (angle-polar z))
+	(else (error "Unknown type -- ANGLE" z))))

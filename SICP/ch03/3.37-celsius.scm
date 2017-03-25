@@ -1,0 +1,36 @@
+(load "p201-adder.scm")
+(load "p202-constant.scm")
+(load "p202-multiplier.scm")
+(load "p202-divider.scm")
+(load "p203-make-connector.scm")
+(load "p203-probe.scm")
+
+(define (c+ x y)
+  (let ((z (make-connector)))
+    (adder x y z)
+    z))
+
+(define (c* x y)
+  (let ((z (make-connector)))
+    (multiplier x y z)
+    z))
+
+(define (cv value)
+  (let ((z (make-connector)))
+    (constant value z)
+    z))
+
+(define (c/ x y)
+  (let ((z (make-connector)))
+    (divider x y z)
+    z))
+
+(define (celsius-fahrenheit-converter x)
+  (c+ (c* (c/ (cv 9) (cv 5))
+	  x)
+      (cv 32)))
+
+(define C (make-connector))
+(define F (celsius-fahrenheit-converter C))
+(probe 'C C)
+(probe 'F F)

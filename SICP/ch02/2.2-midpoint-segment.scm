@@ -1,0 +1,8 @@
+(load "2.2-make-point.scm")
+(load "2.2-x-point.scm")
+(load "2.2-y-point.scm")
+(load "2.2-start-segment.scm")
+(load "2.2-end-segment.scm")
+(define (midpoint-segment x)
+   (make-point (/ (+ (x-point (start-segment x)) (x-point (end-segment x))) 2)
+               (/ (+ (y-point (start-segment x)) (y-point (end-segment x))) 2)))

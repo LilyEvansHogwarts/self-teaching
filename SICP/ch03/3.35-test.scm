@@ -1,0 +1,12 @@
+(load "p201-adder.scm")
+(load "p202-constant.scm")
+(load "p202-multiplier.scm")
+(load "p203-make-connector.scm")
+(load "p203-probe.scm")
+(load "3.35-squarer.scm")
+
+(define a (make-connector))
+(define b (make-connector))
+(squarer a b)
+(probe 'a a)
+(probe 'b b)

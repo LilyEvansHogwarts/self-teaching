@@ -1,0 +1,8 @@
+(load "p119-rectangular.scm")
+(load "p119-polar.scm")
+(load "p119-magnitude-rectangular.scm")
+(load "p119-magnitude-polar.scm")
+(define (magnitude_ z)
+  (cond ((rectangular? z) (magnitude-rectangular z))
+	((polar? z) (magnitude-polar z))
+	(else (error "Unknown type -- MAGNITUDE" z))))

@@ -1,0 +1,5 @@
+(load "p112-symbol-leaf.scm")
+(define (symbols tree)
+  (if (leaf? tree)
+    (list (symbol-leaf tree))
+    (caddr tree)))

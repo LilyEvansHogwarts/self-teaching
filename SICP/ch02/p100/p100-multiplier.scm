@@ -1,0 +1,5 @@
+(define (multiplier p)
+  (display "multiplier ")
+  (display (cadr p))
+  (newline)
+  (cadr p))

@@ -1,0 +1,16 @@
+(load "p46-fixed-point2.scm")
+(define (newton n)
+   (define (deriv g x)
+      (/ (- (g (+ x dx)) (g x)) dx))
+   (define dx 0.00001)
+   (define (g y) (- (* y y y) n))
+   (define (close-enough? v1 v2) (< (abs (- v1 v2)) 0.0001))
+   (define (try f guess)
+      (display guess)
+      (newline)
+      (let ((next (- guess (/ (f guess) (deriv f guess)))))
+         (if (close-enough? guess next)
+             next
+             (try f next))))
+   (try g 1.0))
+

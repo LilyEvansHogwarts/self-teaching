@@ -1,0 +1,5 @@
+(load "p119-real-part-rectangular.scm")
+(load "p199-imag-part-rectangular.scm")
+(define (angle-rectangular z)
+  (atan (imag-part-rectangular z)
+	(real-part-rectangular z)))

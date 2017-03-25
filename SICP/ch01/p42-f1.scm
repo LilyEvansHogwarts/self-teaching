@@ -1,0 +1,6 @@
+(define (f x y)
+   (let ((first (+ 1 (* x y)))
+         (second (- 1 y)))
+        (+ (* x (square first))
+           (* y second)
+           (* first second))))

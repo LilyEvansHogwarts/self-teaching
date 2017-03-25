@@ -1,0 +1,22 @@
+(load "p201-adder.scm")
+(load "p202-constant.scm")
+(load "p202-multiplier.scm")
+(load "p203-make-connector.scm")
+(load "p203-probe.scm")
+
+(define a (make-connector))
+(define b (make-connector))
+(define c (make-connector))
+
+(define (averager a b c)
+  (let ((d (make-connector))
+	(e (make-connector)))
+    (adder a b d)
+    (multiplier e c d)
+    (constant 2 e)
+    'ok))
+
+(averager a b c)
+(probe 'a a)
+(probe 'b b)
+(probe 'c c)

@@ -1,0 +1,7 @@
+(load "2.57-make-sum.scm")
+(load "2.57-single-operand.scm")
+(define (augend s)
+  (let ((a2 (cddr s)))
+    (if (single-operand? a2)
+        (car a2)
+	(apply make-sum a2))))

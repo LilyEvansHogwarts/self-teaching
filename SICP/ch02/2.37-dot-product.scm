@@ -1,0 +1,5 @@
+(define (dot-product x y)
+   (define (accumulate op initial items)
+      (cond ((null? items) initial)
+            (else (accumulate op (op (car items) initial) (cdr items)))))
+   (accumulate + 0 (map * x y)))

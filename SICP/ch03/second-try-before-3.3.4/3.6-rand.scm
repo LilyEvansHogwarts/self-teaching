@@ -1,0 +1,12 @@
+(define random-init 100000)
+
+(define (rand m)
+  (let ((state random-init))
+    (cond ((eq? m 'generate) 
+	   (begin (set! state (random random-init))
+		  state))
+	  ((eq? m 'reset)
+	   (lambda (amount)
+	     (begin (set! state amount) 
+		    state)))
+	  (else (error "no such operation -- RAND" m)))))

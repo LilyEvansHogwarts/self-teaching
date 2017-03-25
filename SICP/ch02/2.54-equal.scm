@@ -1,0 +1,13 @@
+(define (equal a b)
+  (define (fringe a)
+    (fringe-iter a ()))
+  (define (fringe-iter x result)
+    (cond ((null? x) result)
+	  ((not (pair? x)) (cons x result))
+	  (else (fringe-iter (car x) (fringe-iter (cdr x) result)))))
+  (define a1 (fringe a))
+  (define b1 (fringe b))
+  (cond ((and (null? a1) (null? b1)) #t)
+	((eq? (car a1) (car b1)) (equal (cdr a1) (cdr b1)))
+	(else #f)))
+

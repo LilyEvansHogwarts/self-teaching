@@ -1,0 +1,6 @@
+(load "p112-weight-leaf.scm")
+(load "p112-leaf.scm")
+(define (weight tree)
+  (if (leaf? tree)
+    (weight-leaf tree)
+    (cadddr tree)))

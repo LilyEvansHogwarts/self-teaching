@@ -1,0 +1,5 @@
+(define (element-of-tree? x set)
+  (cond ((null? set) #f)
+	((= (entry set) x) #t)
+	((< x (entry set)) (element-of-tree? x (left-branch set)))
+	((> x (entry set)) (element-of-tree? x (right-branch set)))))

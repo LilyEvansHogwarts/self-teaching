@@ -1,0 +1,11 @@
+(define (matrix-*-vector m v)
+   (define (car-n x)
+      (map car x))
+   (define (dot-product x y)
+      (accumulate + 0 (map * x y)))
+   (define (accumulate op initial items)
+      (cond ((null? items) initial)
+            (else (accumulate op (op (car items) initial) (cdr items)))))
+   (let ((v1 (car-n v)))
+      (cond ((null? m) ())
+            (else (cons (list (dot-product (car m) v1)) (matrix-*-vector (cdr m) v))))));;;这里的细节处理，关于列向量输入输出格式与matrix-*-matrix函数不太一样是因为，想要尽可能的拟合实际情况，即区分列向量和行向量

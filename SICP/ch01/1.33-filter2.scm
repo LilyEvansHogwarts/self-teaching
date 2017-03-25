@@ -1,0 +1,6 @@
+(define (filtered f combiner null-value term a next b)
+   (define (iter a result)
+      (cond ((> a b) result)
+            ((f a) (iter (next a) (combiner (term a) result)))
+            (else (iter (next a) result))))
+   (iter a null-value))         

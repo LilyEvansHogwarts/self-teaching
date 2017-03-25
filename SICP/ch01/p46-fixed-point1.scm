@@ -1,0 +1,12 @@
+(define (fixed-point f first-guess)
+   (define (close-enough? v1 v2) (< (abs (- v1 v2)) 0.00001))
+   (define (try guess)
+      (let ((next (f guess)))
+         (if (close-enough? guess next)
+             next
+             (report guess next))))
+   (define (report guess next)
+      (display guess)
+      (newline)
+      (try next))
+   (try first-guess))

@@ -1,0 +1,10 @@
+(load "p33-prime.scm")
+
+(define (continue-primes n count)
+   (define (next-odd n)
+      (if (= (remainder n 2) 1)
+          (+ n 2)
+          (+ n 1)))
+   (cond ((= count 0) (display " are primes."))
+         ((prime? n) (display n) (newline) (continue-primes (next-odd n) (- count 1)))
+         (else (continue-primes (next-odd n) count))))

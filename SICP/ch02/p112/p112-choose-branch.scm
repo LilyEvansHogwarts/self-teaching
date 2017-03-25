@@ -1,0 +1,6 @@
+(load "p112-right-branch.scm")
+(load "p112-left-branch.scm")
+(define (choose-branch bit branch)
+  (cond ((= bit 1) (right-branch branch))
+	((= bit 0) (left-branch branch))
+	(else (error "bad bit -- CHOOSE BRANCH" bit))))

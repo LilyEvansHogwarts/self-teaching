@@ -1,0 +1,11 @@
+(load "p187-table-two-dimension.scm")
+
+(define (test)
+  (define t (make-table))
+  ((t 'insert-proc) 'math '+ 45)
+  ((t 'insert-proc) 'math '- 43)
+  ((t 'insert-proc) 'math '* 42)
+  ((t 'insert-proc) 'letters 'a 97)
+  ((t 'insert-proc) 'letters 'b 98)
+  ((t 'lookup-proc) 'letters 'a)
+  (t 'print-table))

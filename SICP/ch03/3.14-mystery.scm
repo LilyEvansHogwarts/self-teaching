@@ -1,0 +1,10 @@
+(define (mystery x)
+  (define (loop x y)
+    (if (null? x)
+      y
+      (let ((temp (cdr x)))
+	(set-cdr! x y)
+	(display x)
+	(newline)
+	(loop temp x))))
+  (loop x '()))
