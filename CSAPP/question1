@@ -1,0 +1,21 @@
+#!/usr/bin/perl
+
+use warnings;
+use strict;
+use 5.010;
+
+$_ = "green scaly dinosaur";
+s/(\w+) (\w+)/$2, $1/;
+print "$_\n";
+s/^/huge, /;
+print "$_\n";
+s/,.*een//;
+print "$_\n";
+s/green/red/;
+print "$_\n";
+s/\w+$/($`!)$&/;
+print "$_\n";
+s/\s+(!\W+)/$1 /; ##这个是怎么匹配的p166
+print "$_\n";
+s/huge/gigantic/;
+print "$_\n";

@@ -1,0 +1,25 @@
+#!/usr/bin/perl
+
+use DateTime;
+
+my $dt1 = DateTime->new(
+		year => 1987,
+		month => 12,
+		day => 18,
+		);
+
+print $dt1->ymd, "\n";
+
+my $dt2 = DateTime->new(
+		year => 2011,
+		month => 5,
+		day => 1,
+		);
+
+print $dt2->ymd, "\n";
+
+my $duration = $dt2 - $dt1;
+my @units = $duration->in_units( qw(year month day) );
+printf "%d years, %d months, and %d days\n", @units;
+
+##按照p213的代码，为什么最终年月日都是0

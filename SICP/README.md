@@ -4,7 +4,7 @@ This file contents the solution to the exercise in book **Structure and Interpre
 
 ##Aim
 
-在2017.03.20之前解决战斗
+<del>在2017.03.20之前解决战斗</del>
 
 ##todo
 

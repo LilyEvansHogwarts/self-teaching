@@ -171,7 +171,9 @@
   (caddr exp))
 
 (define (if-alternative exp)
-  (cadddr exp))
+ (if (not (null? (cdddr exp)))
+  (cadddr exp)
+  'false))
 
 (define (make-if predicate consequent alternative)
   (list 'if predicate consequent alternative))

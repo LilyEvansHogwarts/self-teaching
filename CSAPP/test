@@ -1,0 +1,13 @@
+#!/usr/bin/perl
+
+use warnings;
+use strict;
+
+my $filename = 'lily';
+die "Oops! A file called '$filename' already exists.\n"
+	if -e $filename;
+
+open CONFIG, 'barney';
+warn "config file is looking pretty old!\n"
+	if -M CONFIG > 1;
+
