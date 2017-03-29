@@ -1,19 +1,19 @@
-#Structure and Interpretation of Computer Programs#
+# Structure and Interpretation of Computer Programs
 
 This file contents the solution to the exercise in book **Structure and Interpretation of Computer Programs**.
 
-##Aim
+## Aim
 
 <del>在2017.03.20之前解决战斗</del>
 
-##todo
+## todo
 
 * p84-permutations
 * 2.6
 * 2.42
 * 3.19 cycle detection
 
-##the exercise that is difficult
+## the exercise that is difficult
 
 * 2.32
 * 2.42
@@ -22,11 +22,11 @@ This file contents the solution to the exercise in book **Structure and Interpre
 * 4.1的求值器
 
 
-##Requirement
+## Requirement
 
 * mit-scheme
 
-##Material
+## Material
 
 - [Google](https://www.google.com/ncr) is always your friend
 - [MIT SICP Web Site](http://mitpress.mit.edu/sicp)
@@ -37,7 +37,7 @@ This file contents the solution to the exercise in book **Structure and Interpre
 - [SICP solution](http://community.schemewiki.org/?SICP-Solutions)可以作为答案，对比别人的做题思路，或者给自己点儿提示
 - [SICP 解题集](http://sicp.readthedocs.io/en/latest/)答案虽然不全面，但是也可以作为参考
 
-##Timeline
+## Timeline
 
 * 2016.12.18 开始刷SICP
 * 2016.12.23 刷完第一章
