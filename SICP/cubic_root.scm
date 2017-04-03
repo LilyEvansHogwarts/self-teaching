@@ -1,0 +1,10 @@
+(define (cubic_root x)
+ (define (improve guess x)
+  (/ (+ guess (/ x (* guess guess))) 2))
+ (define (close-enough? guess x)
+  (< (abs (- x (* guess guess guess))) 0.001))
+ (define (cubic_root_iter guess x)
+  (if (close-enough? guess x)
+   guess
+   (cubic_root_iter (improve guess x) x)))
+ (cubic_root_iter 1.0 x))
