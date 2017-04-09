@@ -5,6 +5,10 @@
  (list 'rect real imag))
 (define (make-complex-from-polar mag ang)
  (list 'polar mag ang))
+(define (make-complex tag a b)
+ (if (or (eq? tag 'rect) (eq? tag 'polar))
+  (list tag a b)
+  (error "unknown form of tag -- make-complex" tag)))
 
 (define (real z)
  (cond ((eq? (tag z) 'rect) (car (content z)))
