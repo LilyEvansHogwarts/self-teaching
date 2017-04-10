@@ -36,6 +36,7 @@ This file contents the solution to the exercise in book **Structure and Interpre
 - [SICP in Javascript](https://www.comp.nus.edu.sg/~cs1101s/sicp/)，新加坡国立大学计算机学院 cs1101 课程
 - [SICP solution](http://community.schemewiki.org/?SICP-Solutions)可以作为答案，对比别人的做题思路，或者给自己点儿提示
 - [SICP 解题集](http://sicp.readthedocs.io/en/latest/)答案虽然不全面，但是也可以作为参考
+- [SICP exercise](https://wizardbook.wordpress.com/solution-index/)
 
 ## Timeline
 
