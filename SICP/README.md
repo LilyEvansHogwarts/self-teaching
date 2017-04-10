@@ -20,6 +20,7 @@ This file contents the solution to the exercise in book **Structure and Interpre
 * p84-permutations.scm
 * 2.4.3 (difficult to understand)
 * 4.1的求值器
+* 4.1.7 将语法分析与执行分离
 
 
 ## Requirement

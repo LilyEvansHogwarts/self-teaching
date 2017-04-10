@@ -1,0 +1,23 @@
+(define (factorial n)
+ ((lambda (fact)
+   (fact fact n))
+  (lambda (ft k)
+   (if (= k 1)
+	1
+	(* k (ft ft (- k 1)))))))
+
+(define (fib n)
+ ((lambda (fib)
+   (fib fib n))
+  (lambda (fb n)
+   (cond ((= n 0) 0)
+		 ((= n 1) 1)
+		 (else (+ (fb fb (- n 1)) (fb fb (- n 2))))))))
+
+(define (f x)
+ ((lambda (new-even? new-odd?)
+   (new-even? new-even? new-odd? x))
+  (lambda (new-even? new-odd? n)
+   (if (= n 0) true (new-odd? new-even? new-odd? (- n 1))))
+  (lambda (new-even? new-odd? n)
+   (if (= n 0) false (new-even? new-even? new-odd? (- n 1))))))
