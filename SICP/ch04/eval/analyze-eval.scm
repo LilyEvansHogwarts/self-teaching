@@ -1,53 +1,94 @@
-;;;注意make-if和make-begin的构造函数是cons还是list
+;;;添加了let、unless函数
 
 (define (eval exp env)
- (display exp)
- (newline)
-  (cond ((self-evaluating? exp) 
-		(display "self-evaluating")
-		(newline)
-		 exp)
-	((variable? exp) 
-	 (display "variable")
-	 (newline)
-	 (lookup-variable-value exp env))
-	((quoted? exp) 
-	 (display "quoted")
-	 (newline)
-	 (text-of-quotation exp))
-	((assignment? exp) 
-	 (display "assignment")
-	 (newline)
-	 (eval-assignment exp env))
-	((definition? exp) 
-	 (display "definition")
-	 (newline)
-	 (eval-definition exp env))
-	((if? exp) 
-	 (display "if")
-	 (newline)
-	 (eval-if exp env))
-	((lambda? exp)
-	 (display "lambda")
-	 (newline)
-	 (make-procedure (lambda-parameters exp)
-			 (lambda-body exp)
-			 env))
-	((begin? exp)
-	 (display "begin")
-	 (newline)
-	 (eval-sequence (begin-actions exp) env))
-	((cond? exp) 
-	 (display "cond")
-	 (newline)
-	 (eval (cond->if exp) env))
-	((application? exp)
-	 (display "application")
-	 (newline)
-	 (apply-inner (eval (operator exp) env)
-		(list-of-values (operands exp) env)))
-	(else (error "Unknown expression type -- EVAL" exp))))
+ ((analyze exp) env))
 
+(define (analyze exp)
+ (cond ((self-evaluating? exp)
+		(analyze-self-evaluating exp))
+	   ((quoted? exp) (analyze-quoted exp))
+	   ((variable? exp) (analyze-variable exp))
+	   ((assignment? exp) (analyze-assignment exp))
+	   ((definition? exp) (analyze-definition exp))
+	   ((if? exp) (analyze-if exp))
+	   ((unless? exp) (analyze (unless->if exp)))
+	   ((lambda? exp) (analyze-lambda exp))
+	   ((begin? exp) (analyze-sequence (begin-actions exp)))
+	   ((cond? exp) (analyze (cond->if exp)))
+	   ((let? exp) (analyze (let->combination exp)))
+	   ((application? exp) (analyze-application exp))
+	   (else (error "Unknown expression type -- ANALYZE" exp))))
+
+;;;*********************************************************
+
+(define (analyze-self-evaluating exp)
+ (lambda (env) exp))
+
+(define (analyze-quoted exp)
+ (let ((qval (text-of-quotation exp)))
+  (lambda (env) qval)))
+
+(define (analyze-variable exp)
+ (lambda (env) (lookup-variable-value exp env)))
+
+(define (analyze-assignment exp)
+ (let ((var (assignment-variable exp))
+	   (vproc (analyze (assignment-value exp))))
+  (lambda (env)
+   (set-variable-value! var (vproc env) env)
+   'ok)))
+
+(define (analyze-definition exp)
+ (let ((var (definition-variable exp))
+	   (vproc (analyze (definition-value exp))))
+  (lambda (env)
+   (define-variable! var (vproc env) env)
+   'ok)))
+
+(define (analyze-if exp)
+ (let ((pproc (analyze (if-predicate exp)))
+	   (cproc (analyze (if-consequent exp)))
+	   (aproc (analyze (if-alternative exp))))
+  (lambda (env)
+   (if (true? (pproc env))
+	(cproc env)
+	(aproc env)))))
+
+(define (analyze-lambda exp)
+ (let ((vars (lambda-parameters exp))
+	   (bproc (analyze-sequence (lambda-body exp))))
+  (lambda (env)
+   (make-procedure vars bproc env))))
+
+(define (analyze-sequence exps)
+ (define (sequentially proc1 proc2)
+  (lambda (env) (proc1 env) (proc2 env)))
+ (define (loop first-proc rest-procs)
+  (if (null? rest-procs)
+   first-proc
+   (loop (sequentially first-proc (car rest-procs))
+		 (cdr rest-procs))))
+ (let ((procs (map analyze exps)))
+  (if (null? procs)
+   (error "Empty sequence -- ANALYZE"))
+  (loop (car procs) (cdr procs))))
+
+(define (analyze-application exp)
+ (let ((fproc (analyze (operator exp)))
+	   (aprocs (map analyze (operands exp))))
+  (lambda (env)
+   (execute-application (fproc env)
+	(map (lambda (aproc) (aproc env)) aprocs)))))
+
+(define (execute-application proc args)
+ (cond ((primitive-procedure? proc)
+		(apply-primitive-procedure proc args))
+	   ((compound-procedure? proc)
+		((procedure-body proc)
+		 (extend-environment (procedure-parameters proc)
+							 args
+							 (procedure-environment proc))))
+	   (else (error "Unknown procedure type -- EXECUTE-APPLICATION" proc))))
 
 ;;;*************************************************************
 
@@ -76,12 +117,6 @@
 
 ;;;*************************************************************
 
-(define (eval-assignment exp env)
-  (set-variable-value! (assignment-variable exp)
-		       (eval (assignment-value exp) env)
-		       env)
-  'ok)
-
 (define (assignment? exp)
   (tagged-list? exp 'set!))
 
@@ -90,12 +125,6 @@
 (define (assignment-value exp) (caddr exp))
 
 ;;;*************************************************************
-
-(define (eval-definition exp env)
-  (define-variable! (definition-variable exp)
-		    (eval (definition-value exp) env)
-		    env)
-  'ok)
 
 (define (definition? exp)
   (tagged-list? exp 'define))
@@ -111,11 +140,6 @@
     (make-lambda (cdadr exp) (cddr exp))))
 
 ;;;*************************************************************
-
-(define (eval-if exp env)
-  (if (true? (eval (if-predicate exp) env))
-    (eval (if-consequent exp) env)
-    (eval (if-alternative exp) env)))
 
 (define (if? exp)
   (tagged-list? exp 'if))
@@ -136,6 +160,22 @@
 
 ;;;*************************************************************
 
+(define (unless? exp) (tagged-list? exp 'unless))
+
+(define (unless-predicate exp) (cadr exp))
+
+(define (unless-consequent exp) 
+ (if (not (null? (cdddr exp)))
+  (cadddr exp)
+  false))
+
+(define (unless-alternative exp) (caddr exp))
+
+(define (unless->if exp)
+ (make-if (unless-predicate exp) (unless-consequent exp) (unless-alternative exp)))
+
+;;;*************************************************************
+
 (define (lambda? exp)
   (tagged-list? exp 'lambda))
 
@@ -150,11 +190,6 @@
 
 ;;;*************************************************************
 
-(define (eval-sequence exps env)
-  (cond ((last-exp? exps) (eval (first-exp exps) env))
-	(else (eval (first-exp exps) env)
-	      (eval-sequence (rest-exps exps) env))))
-
 (define (begin? exp)
   (tagged-list? exp 'begin))
 
@@ -165,7 +200,6 @@
 (define (first-exp seq) (car seq))
 
 (define (rest-exps seq) (cdr seq))
-
 
 (define (sequence->exp seq)
   (cond ((null? seq) seq)
@@ -204,6 +238,23 @@
 	(make-if (cond-predicate first)
 		 (sequence->exp (cond-actions first))
 		 (expand-clauses rest))))))
+
+;;;*************************************************************
+
+(define (let? exp)
+ (tagged-list? exp 'let))
+
+(define (let-declare exp) (cadr exp))
+
+(define (let-body exp) (cddr exp))
+
+(define (let-variables exp) (map car (let-declare exp)))
+
+(define (let-values exp) (map cadr (let-declare exp)))
+
+(define (let->combination exp)
+ (cons (make-lambda (let-variables exp) (let-body exp))
+	   (let-values exp)))
 
 ;;;*************************************************************
 
@@ -328,7 +379,9 @@
 	(list '* *)
 	(list '/ /)
 	(list '= =)
-	(list 'eq? eq?)))
+	(list 'eq? eq?)
+	(list 'map map)
+	(list 'list list)))
 
 (define (primitive-procedure-names)
   (map car primitive-procedures))
@@ -338,16 +391,6 @@
 
 (define (apply-primitive-procedure proc args)
   (apply (primitive-implementation proc) args))
-
-(define (apply-inner proc args)
-  (cond ((primitive-procedure? proc)
-	 (apply-primitive-procedure proc args))
-	((compound-procedure? proc)
-	 (eval-sequence (procedure-body proc)
-			(extend-environment (procedure-parameters proc)
-					    args
-					    (procedure-environment proc))))
-	(else (error "Unknown procedure type -- AAPLY" proc))))
 
 ;;;**********************************************************
 
@@ -384,7 +427,4 @@
 ;;;********************************************************
 
 (define the-global-environment (setup-environment))
-;;(driver-loop)
-(define (interpret exp)
- (eval exp the-global-environment))
-
+(driver-loop)
