@@ -10,4 +10,10 @@
 					b
 					(cons (car a) (append (cdr a) b))))
 			(append '(a b c) '(e f g))))
-(interpret a)
+
+(define c '(begin (define count 0)
+				  (define (id x)
+				   (set! count (+ count 1))
+				   x)
+				  (define w (id (id 10)))))
+(interpret c)
