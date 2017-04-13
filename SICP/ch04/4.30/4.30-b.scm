@@ -1,0 +1,17 @@
+(define a '(begin (define (p1 x)
+				   (set! x (cons x '(2)))
+				   x)
+				  (define (p2 x)
+				   (define (p e)
+					e
+					x)
+				   (p (set! x (cons x '(2)))))
+				  (display (p1 1))
+				  (newline)
+				  (display (p2 1))
+				  (newline)))
+
+(load "original.scm")
+(interpret a)
+(load "Cy-eval-sequence.scm")
+(interpret a)
