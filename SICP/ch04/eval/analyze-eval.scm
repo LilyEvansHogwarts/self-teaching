@@ -427,4 +427,6 @@
 ;;;********************************************************
 
 (define the-global-environment (setup-environment))
-(driver-loop)
+;;;(driver-loop)
+(define (interpret exp)
+ (eval exp the-global-environment))

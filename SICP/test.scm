@@ -1,4 +1,4 @@
-(load "try.scm")
+(load "analyze1.scm")
 
 (define a '(begin (define (append a b)
 				   (if (null? a)
