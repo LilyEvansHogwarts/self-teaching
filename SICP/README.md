@@ -46,5 +46,11 @@ This file contents the solution to the exercise in book **Structure and Interpre
 * 2017.01.13 刷完第二章
 * 2017.02.21 刷完第三章(由于过年期间中断2017.01.18到2017.02.11之间没有看，导致第三章部分忘记，于是又重新将第三章前部分刷了一遍)
 
+## description
+
+* eval.scm 
+* analyze-eval.scm eval with analyze
+* lazy1-eval.scm  lazy eval with thunk
+* lazy2-eval.scm  lazy eval with evaluated-thunk
 
 

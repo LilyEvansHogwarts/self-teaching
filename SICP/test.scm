@@ -1,4 +1,4 @@
-(load "analyze1.scm")
+(load "lazy2-eval.scm")
 
 (define a '(begin (define (append a b)
 				   (if (null? a)
