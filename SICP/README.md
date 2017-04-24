@@ -12,6 +12,8 @@ This file contents the solution to the exercise in book **Structure and Interpre
 * 2.6
 * 2.42
 * 3.19 cycle detection
+* 4.32
+* 4.34
 
 ## the exercise that is difficult
 
