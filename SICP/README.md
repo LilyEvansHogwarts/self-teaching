@@ -48,9 +48,9 @@ This file contents the solution to the exercise in book **Structure and Interpre
 
 ## description
 
-* eval.scm 
-* analyze-eval.scm eval with analyze
-* lazy1-eval.scm  lazy eval with thunk
-* lazy2-eval.scm  lazy eval with evaluated-thunk
-
+* eval/eval.scm 
+* eval/analyze-eval.scm eval with analyze
+* eval/lazy1-eval.scm  lazy eval with thunk
+* eval/lazy2-eval.scm  lazy eval with evaluated-thunk
+* eval/lazy-memo-eval.scm lazy eval whose parameters can choose lazy or lazy-memo
 
