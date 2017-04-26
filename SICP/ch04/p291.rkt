@@ -1,0 +1,36 @@
+#lang swindle
+
+(define (require p)
+ (if (not p) (amb)))
+
+(define (distinct? items)
+  (define (iter y xs)
+    (cond ((null? xs) (distinct? (cdr items)))
+          ((eq? (car xs) y) false)
+          (else (iter y (cdr xs)))))
+  (if (null? items)
+      true
+      (let ((y (car items)))
+        (iter y (cdr items)))))
+
+(define (multiple-dwelling)
+ (let ((baker (amb 1 2 3 4 5))
+	   (cooper (amb 1 2 3 4 5))
+	   (fletcher (amb 1 2 3 4 5))
+	   (miler (amb 1 2 3 4 5))
+	   (smith (amb 1 2 3 4 5)))
+  (require (distinct? (list baker cooper fletcher miler smith)))
+  (require (not (= baker 5)))
+  (require (not (= cooper 1)))
+  (require (not (= fletcher 5)))
+  (require (not (= fletcher 1)))
+  (require (> miler cooper))
+  (require (not (= 1 (abs (- fletcher smith)))))
+  (require (not (= 1 (abs (- fletcher cooper)))))
+  (list (list 'baker baker)
+		(list 'cooper cooper)
+		(list 'fletcher fletcher)
+		(list 'miler miler)
+		(list 'smith smith))))
+
+;;;(multiple-dwelling)
