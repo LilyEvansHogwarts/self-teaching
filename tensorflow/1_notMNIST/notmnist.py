@@ -137,8 +137,8 @@ def merge_datasets(pickle_files, train_size, valid_size = 0):
 	num_classes = len(pickle_files)
 	valid_dataset, valid_labels = make_arrays(valid_size, image_size)
 	train_dataset, train_labels = make_arrays(train_size, image_size)
-	vsize_per_class = valid_size
-	tsize_per_class = train_size
+	vsize_per_class = valid_size // num_classes
+	tsize_per_class = train_size // num_classes
 
 	start_v, start_t = 0, 0
 	end_v, end_t = vsize_per_class, tsize_per_class
@@ -165,9 +165,9 @@ def merge_datasets(pickle_files, train_size, valid_size = 0):
 			raise
 	return valid_dataset, valid_labels, train_dataset, train_labels
 
-train_size = 200000
+train_size = 300000
 valid_size = 10000
-test_size = 10000
+test_size = 18720
 
 valid_dataset, valid_labels, train_dataset, train_labels = merge_datasets(train_datasets, train_size, valid_size)
 _, _, test_dataset, test_labels = merge_datasets(test_datasets, test_size)
@@ -192,7 +192,7 @@ try:
 			'train_dataset': train_dataset,
 			'train_labels': train_labels,
 			'valid_dataset': valid_dataset,
-			'valid_labels': valid_dataset,
+			'valid_labels': valid_labels,
 			'test_dataset': test_dataset,
 			'test_labels': test_labels,
 			}
