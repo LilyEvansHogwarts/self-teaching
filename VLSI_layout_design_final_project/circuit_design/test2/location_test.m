@@ -1,4 +1,4 @@
-num = 1000;
+num = 500;
 time = 20;
 
 d = zeros(1,time);

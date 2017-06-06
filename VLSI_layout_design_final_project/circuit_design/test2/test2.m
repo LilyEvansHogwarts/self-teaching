@@ -2,15 +2,12 @@
 
 clear;
 num = 500;
-percent = 0.2;
 L = create_laplacian_matrix(num);
-%cut = initialize_cut(num,percent);
-%vertex = initialize_vertex(L,cut,num);
 [V,D] = eig(L);
 cut_cost = zeros(1,num);
 for i = 1:num
     u = sign(V(:,i));
-    cut_cost(1,i) = u' * L * u;
+    cut_cost(1,i) = u' * L * u / 4;
 end
 x = 1:num;
 [ymin,d] = min(cut_cost(1,2:num));
